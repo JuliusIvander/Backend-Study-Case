@@ -1,23 +1,23 @@
 const mongoose = require("mongoose");
-const Karyawan = require("./Kehadiran");
+const Karyawan = require("./Karyawan");
 
 const kehadiranSchema = new mongoose.Schema(
   {
-    waktuKehadiran: {
+    waktu_kehadiran: {
       type: Date,
       required: true,
+      default: Date.now(),
     },
     statusKehadiran: {
       type: String, // [Hadir, Izin, Sakit, Tanpa Keterangan]
       required: true,
     },
-    idKaryawan: {
+    id_karyawan: {
       type: mongoose.Schema.Types.ObjectId,
       ref: Karyawan,
-      required: true,
     },
   },
-  { timestamps: { createdAt: "waktuKehadiran" } }
+  { timestamps: false }
 );
 
 module.exports = mongoose.model("Kehadiran", kehadiranSchema);

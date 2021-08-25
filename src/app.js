@@ -7,20 +7,28 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const routeKaryawan = require("./routers/KaryawanRoutes");
+
+app.use("/", routeKaryawan);
+
 const USER = process.env.DB_USER;
 const PASS = process.env.DB_PASS;
 const DB = process.env.DB_NAME;
 
 const db =
-  "mongodb+srv://" +
+  "mongodb://" +
   USER +
   ":" +
   PASS +
-  "@cluster0.oufx0.mongodb.net/" +
+  "@cluster0-shard-00-00.oufx0.mongodb.net:27017,cluster0-shard-00-01.oufx0.mongodb.net:27017,cluster0-shard-00-02.oufx0.mongodb.net:27017/" +
   DB +
-  "?retryWrites=true&w=majority";
+  "?ssl=true&replicaSet=atlas-8du56l-shard-0&authSource=admin&retryWrites=true&w=majority";
 
-mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(db, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+});
 mongoose.connection.on("connected", () => {
   console.log("Connected to mongo instance");
 });
@@ -28,7 +36,4 @@ mongoose.connection.on("error", (err) => {
   console.log(err);
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Listening to port ${PORT}`);
-});
+module.exports = app;
