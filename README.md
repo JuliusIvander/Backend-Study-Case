@@ -34,4 +34,4 @@ Server lokal `http://localhost:3000`
 
 - Dokumentasi Endpoint API
 
-  swagger-ui Endpoint : http://localhost:8001/api-documentation
+  swagger-ui Endpoint : http://localhost:3000/api-documentation
