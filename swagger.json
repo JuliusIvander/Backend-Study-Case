@@ -1,0 +1,354 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Dokumentasi Backend-Study-Case API yang merupakan studi kasus Assist.Id",
+    "version": "1.0.0",
+    "title": "Backend-Study-Case"
+  },
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "karyawan",
+      "description": "Request yang berkaitan dengan karyawan"
+    },
+    {
+      "name": "kehadiran",
+      "description": "Request yang berkaitian dengan kehadiran"
+    }
+  ],
+  "paths": {
+    "/create-akun": {
+      "post": {
+        "tags": [
+          "karyawan"
+        ],
+        "summary": "Membuat data karyawan",
+        "description": "Membuat data karyawan sebanyak n data yang kemudian disimpan kedalam database. Response API adalah data yang dimasukan kedalam database.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "data karyawan",
+            "description": "data karyawan yang ingin dimasukkan",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/data-karyawan"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data karyawan telah berhasil dibuat dan disimpan",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/output-data-karyawan"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/kehadiran": {
+      "post": {
+        "tags": [
+          "kehadiran"
+        ],
+        "summary": "Membuat data kehadiran karyawan",
+        "description": "Membuat data kehadiran karyawan yang kemudian disimpan kedalam database. Response API adalah data yang dimasukan kedalam database.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "data kehadiran",
+            "description": "data kehadiran yang ingin dimasukkan",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/data-kehadiran"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data kehadiran telah berhasil dibuat dan disimpan",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "$ref": "#/definitions/output-data-kehadiran"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/kehadiran/{id}": {
+      "put": {
+        "tags": [
+          "kehadiran"
+        ],
+        "summary": "Mengubah data kehadiran",
+        "description": "Mengubah data kehadiran yang ada kemudian disimpan kedalam database. Response API adalah data yang berhasil disunting dan disimpan kedalam database.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "parameter berupa id kehadiran (yang diperoleh dari _id schema kehadiran)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "data kehadiran",
+            "description": "data kehadiran yang ingin diubah",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_kehadiran": {
+                  "type": "string",
+                  "example": "Sakit"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data kehadiran berhasil disunting / diubah",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "object",
+                      "example": "61265157ec0ea721682723d3"
+                    },
+                    "waktu_kehadiran": {
+                      "type": "string",
+                      "example": "2021-08-25T14:19:03.542Z"
+                    },
+                    "status_kehadiran": {
+                      "type": "string",
+                      "example": "Sakit"
+                    },
+                    "id_karyawan": {
+                      "type": "string",
+                      "example": "612650d8ec0ea721682723af"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/kehadiran/hapus/{id}": {
+      "delete": {
+        "tags": [
+          "kehadiran"
+        ],
+        "summary": "menghapus data kehadiran",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "parameter berupa id kehadiran (yang diperoleh dari _id schema kehadiran)",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data kehadiran berhasil dihapus",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Data telah dihapus!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/laporan": {
+      "get": {
+        "tags": [
+          "kehadiran"
+        ],
+        "summary": "Melihat rekap data karyawan",
+        "description": "Melihat data karyawan yang berisi berapa kali status kehadiran karyawan yang terdapat dalam database",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Rekap data telah berhasil ditampilkan",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/data-laporan"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "data-karyawan": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "nama karyawan",
+          "example": "Ahmad Dani"
+        }
+      }
+    },
+    "output-data-karyawan": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "object",
+          "description": "id karyawan",
+          "example": "612650d8ec0ea721682723af"
+        },
+        "name": {
+          "type": "string",
+          "description": "nama karyawan",
+          "example": "Ahmad Dani"
+        }
+      }
+    },
+    "data-kehadiran": {
+      "type": "object",
+      "properties": {
+        "status_kehadiran": {
+          "type": "string",
+          "description": "status kehadiran karyawan yang meliputi [Hadir, Sakit, Izin, & Tanpa Keterangan]",
+          "example": "Hadir"
+        },
+        "id_karyawan": {
+          "type": "string",
+          "description": "id karyawan yang diperoleh dari schema karyawan",
+          "example": "612650d8ec0ea721682723af"
+        }
+      }
+    },
+    "output-data-kehadiran": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "object",
+          "description": "id kehadiran",
+          "example": "61265157ec0ea721682723d3"
+        },
+        "waktu_kehadiran": {
+          "type": "string",
+          "description": "waktu karyawan melakukan kehadiran (Data type date)",
+          "example": "2021-08-25T14:19:03.542Z"
+        },
+        "status_kehadiran": {
+          "type": "string",
+          "description": "status kehadiran karyawan yang meliputi [Hadir, Sakit, Izin, & Tanpa Keterangan]",
+          "example": "Hadir"
+        },
+        "id_karyawan": {
+          "type": "string",
+          "description": "id karyawan yang diperoleh dari schema karyawan",
+          "example": "612650d8ec0ea721682723af"
+        }
+      }
+    },
+    "data-laporan": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "object",
+          "description": "data berisi id dan nama karyawan",
+          "properties": {
+            "id_karyawan": {
+              "type": "object",
+              "example": "612650d8ec0ea721682723ab"
+            },
+            "nama": {
+              "type": "string",
+              "example": "Ahmad dani"
+            }
+          }
+        },
+        "Hadir": {
+          "type": "integer",
+          "description": "jumlah hadir karyawan",
+          "example": 4
+        },
+        "Sakit": {
+          "type": "integer",
+          "description": "jumlah sakit karyawan",
+          "example": 2
+        },
+        "Izin": {
+          "type": "integer",
+          "description": "jumlah izin karyawan",
+          "example": 3
+        },
+        "Tanpa_Keterangan": {
+          "type": "integer",
+          "description": "jumlah tanpa keterangan karyawan",
+          "example": 0
+        }
+      }
+    }
+  }
+}

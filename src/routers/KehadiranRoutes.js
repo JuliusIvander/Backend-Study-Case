@@ -10,7 +10,7 @@ router.post("/kehadiran", KehadiranCtrlr.createKehadiran);
 router.put("/kehadiran/:id", KehadiranCtrlr.editKehadiran);
 
 // Menghapus kehadiran
-router.delete("/kehadiran/:id", KehadiranCtrlr.deleteKehadiran);
+router.delete("/kehadiran/hapus/:id", KehadiranCtrlr.deleteKehadiran);
 
 // Melihat status kehadiran karyawan
 router.get("/laporan", LaporanCtrlr.getLaporanKaryawan);
