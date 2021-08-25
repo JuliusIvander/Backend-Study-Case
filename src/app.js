@@ -8,8 +8,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const routeKaryawan = require("./routers/KaryawanRoutes");
+const routeKehadiran = require("./routers/KehadiranRoutes");
 
 app.use("/", routeKaryawan);
+app.use("/", routeKehadiran);
 
 const USER = process.env.DB_USER;
 const PASS = process.env.DB_PASS;
@@ -28,6 +30,7 @@ mongoose.connect(db, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 });
 mongoose.connection.on("connected", () => {
   console.log("Connected to mongo instance");

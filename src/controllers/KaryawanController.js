@@ -3,7 +3,7 @@ const Karyawan = require("../models/Karyawan");
 const createKaryawan = (req, res) => {
   Karyawan.insertMany(req.body)
     .then((result) => {
-      res.status(200).json({
+      res.json({
         status: true,
         data: result,
       });

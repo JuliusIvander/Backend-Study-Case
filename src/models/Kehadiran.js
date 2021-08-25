@@ -8,13 +8,14 @@ const kehadiranSchema = new mongoose.Schema(
       required: true,
       default: Date.now(),
     },
-    statusKehadiran: {
+    status_kehadiran: {
       type: String, // [Hadir, Izin, Sakit, Tanpa Keterangan]
       required: true,
     },
     id_karyawan: {
       type: mongoose.Schema.Types.ObjectId,
       ref: Karyawan,
+      required: true,
     },
   },
   { timestamps: false }
